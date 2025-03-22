@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>WorkSlate Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body {font-family: Arial;}
+    
+    /* Style the Header box */
+    #headerbox {
+      color: black ;
+      background-color: LightGreen ;
+      padding: 10px ;
+      /* border: 1px solid green ; */
+    }
+
+    /* Style the tab */
+    .tab {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+    }
+    
+    /* Style the buttons inside the tab */
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+      font-size: 17px;
+    }
+    
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+      background-color: #ddd;
+    }
+    
+    /* Create an active/current tablink class */
+    .tab button.active {
+      background-color: #ccc;
+    }
+    
+    /* Style the tab content */
+    .tabcontent {
+      display: none;
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-top: none;
+      color: #ccc;
+    }
+    
+    /* Style the tables */
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #204040 ;
+    }
+
+    /* link colors to better fit on the green background */
+    a:link    { color: #00B000; } /* unvisited */
+    a:visited { color: #009000; } /* visited link */
+    a:hover   { color: #00F000; } /* mouse over link */
+    a:active  { color: #dddddd; } /* selected link */
+
+    </style>
+  </head>
+
+  <body style="background-color:DarkSlateGray;"> <!-- actually dark green -->
+    <div id="headerbox">
+        <span style="font-size: 2em; font-weight: bold; "> Convergent Technologies WorkSlate Simulator </span> <br>
+        <span style="font-size: 1.17em; font-weight: bold;"> by John Maushammer </span>
+    </div>
+
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'simulator_tab', 1)" id="defaultOpen">Simulator</button>
+      <button class="tablinks" onclick="openTab(event, 'about', 0)">About the Device</button>
+      <button class="tablinks" onclick="openTab(event, 'techinfo', 0)">Tech info</button>
+    </div>
+
+    <!-- Tab Content - simulator -->
+    <div id="simulator_tab" class="tabcontent">
+      <br>
+      <!-- The WASM will attach the canvas here (to "simulator_tab") -->
+    </div>
+
+    <!-- Tab Content - about -->
+    <div id="about" class="tabcontent">
+      <h2>What is a WorkSlate?</h2>
+      <p>It's a unique short-lived laptop from 1983 aimed at business people.  Unlike modern laptops that can run multiple programs,
+      this one only does spreadsheets!  It has a calendar, a memopad, a finance calculator, and a contact list -- all of which are
+      implemented as spreadsheets. The clock has an alarm which -- you guessed it -- is a spreadsheet!  It is programmable like other
+      computers, but instead of BASIC or another language, you write it in a spreadsheet.
+      <br><br>In 1983, the idea of what a portable computer should do and how it should be used hadn't been fully developed.  Spreadsheets were
+      new and exciting (<a href="https://en.wikipedia.org/wiki/VisiCalc">VisiCalc</a> had just come out at the end of 1979), so that seemed like a good idea.
+      The lack of a word processor seems like an obvious mistake today, but executives were not expected to use a typewriter - that was the domain
+      of highly skilled secretaries.  The WorkSlate's microcasette can take dictation, and you can hand that tape off for typing.<br>
+      <br>The WorkSlate also connected to the phone line.  You can call a remote computer through its built-in modem, or use it as a speakerphone. 
+      Besides taking dictation, the microcassette saves your data.  Convergent Technologies also sold load pre-programmed spreadsheets that acted
+      similar to applications - you just filled in the blanks.  These tapes have an audio track that played voice instructions for use.<br>
+      <br>Over its short production run of seven months, only a few thousand of these machines were sold.  That makes it pretty rare to see one in-person,
+      so I wrote this simulator to let more people experience this unique device.
+      <br><br>
+      External links:
+      <ul>
+         <li><a href="https://oldvcr.blogspot.com/2024/09/programming-convergent-workslates.html">A much more complete introduction</a></li>
+         <li><a href="https://en.wikipedia.org/wiki/Convergent_Technologies#WorkSlate">Wikipedia article</a></li>
+         <li><a href="https://www.si.edu/object/nmah_1819447">It's in the Smithsonian Institution collection</a></li>
+      </ul> </p>
+
+      <br> <h2>Interesting facts:</h2>
+      <p>
+      <ul>
+        <li>"User Friendly" was a buzzword in the 80s.  When you first power on the computer,
+        it will ask for your name. It will sometimes use your name in error messages, and
+        even when you use the caps-lock key!</li>
+        <li>Modern computers use mostly the same keys and characters, but this one has a few unique
+        ones that are not included in the <a href="https://en.wikipedia.org/wiki/ASCII">ASCII standard</a>:
+          <ul>
+            <li>Multiply (&times;) and Divide (&divide;) are distinct from the now-used asterisk (*)
+            and slash (/) symbols.</li>
+            <li>Not-equals (&ne;) is used to test if two values are different. 
+            Excel and the BASIC languages of the time use <> instead, which isn't as clear.</li>
+            <li>Special-I may look like an underscore (_), but it acts like a minus, which already has its own dedicated key.  Maybe this was a mistake?</li>
+            <li>Special-C enters a unique character that is a combination of a C and a T.  Perhaps this easter egg represents Convergent Technology? Try it by pressing CTRL-C.</li>
+          </ul>
+        Also, the DoIt key replaces the RETURN or ENTER key (thought to be more user-friendly, unless you misread it as Dolt).</li>
+        <li>The PC board and the software are designed to use three ROMs (32kB each), but the machines shipped with only two.
+            These ROMs are jam-packed with data (99.8% full, with 112 bytes unused), so it looks like
+            the third one was a hedge in case the code couldn't fit in two. It might also have been for future or dropped features.</li>
+        <li>The code tests the memory to see if 16kB or 32kB of RAM is installed.  It seems like it
+            would work fine if 32kB is installed, even though machines were only sold with 16kB.</li>
+      </ul> </p>
+
+      <br><h2>Using the Simulator</h2>
+      <p>To enter text, you can click the on-screen keyboard:
+      <ul>
+         <li>The <strong style="bold;color:#d3c539">Shift/</strong><strong style="bold;color:#7bb35b">Lock</strong> and <strong style="bold;color:#7bb35b">Special</strong> keys are not clickable yet.
+           Use your keyboard's shift (shift-click) for <strong style="bold;color:#d3c539">Shift</strong>, or use Alt (alt-click) for <strong style="bold;color:#7bb35b">Special</strong>.</li>
+      </ul>
+      Or use your regular keyboard:
+      <ul>
+         <li>Press F1-F5 for the soft keys (labeled <strong style="bold;color:#7bb35b">Calc</strong>, <strong style="bold;color:#7bb35b">Finance</strong>, 
+             <strong style="bold;color:#7bb35b">Memo</strong>, <strong style="bold;color:#7bb35b">Phone</strong>, and <strong style="bold;color:#7bb35b">Time</strong>)</li>
+         <li>Press F6 for the <strong style="bold;color:#d3c539">Options</strong> key, press F7 for the <strong style="bold;color:#d3c539">Worksheet</strong> key.</li>
+      </ul>
+      We've remapped some keys to more modern equivalents:<br><br>
+      <table style="width: 1%; margin-left:30px">
+        <tr>
+          <th>Special Key:</th>
+          <th style='text-align:center'>Z</th>
+          <th style='text-align:center'>X</th>
+          <th style='text-align:center'>V</th>
+          <th style='text-align:center'>B</th>
+          <th style='text-align:center'>N</th>
+          <th style='text-align:center'>M</th>
+          <th style='text-align:center'>*</th>
+          <th style='text-align:center'>/</th>
+          <th style='text-align:center'>&ne;</th>
+        </tr>
+        <tr>
+          <th>Action:</th>
+          <th style="bold;color:#7bb35b">Find</th>
+          <th style="bold;color:#7bb35b">Print</th>
+          <th style="bold;color:#7bb35b">Save</th>
+          <th style="bold;color:#7bb35b">Get</th>
+          <th style="bold;color:#7bb35b">Recalc</th>
+          <th style="bold;color:#7bb35b">Switch</th>
+          <th>&emsp;&emsp;</th>
+          <th>&emsp;&emsp;</th>
+          <th>&emsp;&emsp;</th>
+        </tr>
+        <tr>
+          <th>Press CTRL-</th>
+          <th style='text-align:center'>F</th>
+          <th style='text-align:center'>P</th>
+          <th style='text-align:center'>S</th>
+          <th style='text-align:center'>G</th>
+          <th style='text-align:center'>R</th>
+          <th style='text-align:center'>W</th>
+          <th style='text-align:center'>A</th>
+          <th style='text-align:center'>D</th>
+          <th style='text-align:center'>N</th>
+        </tr>
+      </table>
+      </p>
+      <br><h2>Simulator Limitations</h2>
+      The tape (load and save), serial port, and printer are not emulated yet.  The eject button is purely mechanical.<br>
+      <br><h2>Simulator Bugs</h2>
+      <p>There is an unknown character displayed as a checkerboard.  This character only shows up on the simulator;
+         I haven't been able to get it to display on a real machine.  I don't know what it is supposed to mean.
+      </p>
+
+      <br><h2>Copyright</h2>
+
+      <p>Incorporates processor simulation code from <a href="https://github.com/jhallen/exorsim">EXORsim</a> M6800 Simulator Copyright &copy; 2011 Joseph H. Allen (GPL license).<br>
+      Modifications for 6801 Copyright &copy; 2020 Joel Matthew Rees (<a href="https://osdn.net/users/reiisi/pf/exorsim6801/scm/commits/92ef8a291a6240887b19ec9117ea774aba59ea9a">exorsim6801</a>).<br>
+      Modifications for 6803 & WorkSlate emulation Copyright &copy; 2025 John Maushammer. [Source code here.](https://github.com/maushammer/workslate-sim)<br>
+      This web version uses the <a href="https://cheerp.io">Cheerp WASM compiler</a> to run C code in a web browser.  There is also a version that runs in a terminal and includes a full debugger.<br>
+      <br>
+      This is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software
+      Foundation; either version 1, or (at your option) any later version. 
+      It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+      FOR A PARTICULAR PURPOSE.  See the <a href="https://www.gnu.org/licenses/">GNU General Public License</a> for more details.</p>
+    </div>
+
+    <!-- Tab Content - tech info -->
+    <div id="techinfo" class="tabcontent">
+      <h2>Introduction & Other Resources</h2>
+
+      <p><a href="https://oldvcr.blogspot.com/2024/09/programming-convergent-workslates.html">Here</a> is a great blog post that has a good overview of the system,
+      pictures of the internals, features and bugs of the spreadsheet, and analysis of the serial protocol.<br>
+      <a href="http://www.floodgap.com/retrobits/workslate/">This</a> is another article from the same author, with a description of the built-in spreadsheet functions.<br>
+      <br>
+      Bitsavers preserved what looks like to be an early design review document: <a href="https://bitsavers.org/pdf/convergent/workslate/">
+      Workslate_Hardware_and_Service_Manual_Draft_Theory_of_Operations_Nov83</a><br>
+      It is incomplete (missing pages), and some of the details changed between this review and production.</p>
+
+      <br> <h2>Tech Specs</h2>
+      <ul>
+        <li>Spreadsheet application (128 x 128 cells)</li>
+        <li>Terminal Application for calling another computer</li>
+        <li>An 8-bit CMOS processor, HD63B03RF, compatible with the Motorola 6803</li>
+        <li>16 KB of battery-backed RAM, 64 KB of ROM</li>
+        <li>Microcassette for data storage and audio</li>
+        <li>46x16 monochrome text LCD (not backlit)</li>
+        <li>11.25" x 8.5" x 1" - just slightly larger than a sheet of paper</li>
+        <li>Built-in speakerphone & 300 baud modem</li>
+        <li>Runs on 4 AA batteries or NiCd battery pack</li>
+        <li>Price: $895 in 1984, equivalent to $2800 in 2025</li>
+        <li>Optional Accessories ($395 each): 4-color plotter/printer, CommPort Expansion with RS-232 serial and a Centronics parallel port</li>
+      </ul>
+
+      <br> <h2>My Research</h2>
+
+      <p>I love reverse engineering embedded systems!  I started by desoldering the ROM chips
+      from a broken machine.  This processes isn't usually destructive, but I wanted to be safe.
+      From there, I built a ROM reader and copied the code into my computer.  ROM readers used to
+      be more popular back in the day, but it was just easier to wire up an Arduino to do the job.
+      Then, I used Ghidra to disassemble the code. It supports a lot of processors, but it didn't
+      support this one.  I found an existing processor plug-in for the MC6800, and adapted it for
+      the extra instructions in the 6801 and HD63B03. Next, I used a MC6800 emulator and added
+      the extra instructions of the HD63B03.  Then I simultaneously disassembled the code in
+      Ghidra (looking at the instructions and guessing at the functionality) while developing
+      the simulator (adding hardware emulation for all the peripherals & figuring out the custom
+      character font ROM).  Basically, I'd run until the processor tried to access an unknown
+      register, and then I'd figure out what that register was doing (is it the LCD? Is it
+      the clock?) and then implement it in my emulator.  Rinse & repeat for a few weeks.
+      Finally, I had a working emulation of the WorkSlate, but it ran in a command-line
+      terminal only.  I then adapted it to run in WASM and added I/O for a web browser
+      (keyboard and screen routines).
+
+      <br> <br>This is a hardware summary of the machine and its custom gate arrays.
+      I'm still working on documenting the software; hand-coded assembly of a project this
+      size is slow going.</p>
+
+      <br> <br>This simulator compiles both for the web (WASM), and for the terminal console.
+      It is tested with OSX, but also includes untested support for Linux.</p>
+
+      <br> <h2>Memory Map</h2>
+
+<table style="width: 90%">
+  <tr>
+    <th>Description</th>
+    <th>Signal</th>
+    <th>Chip</th>
+    <th>Address Range</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Port 1</td>
+    <td>P1</td>
+    <td>CPU</td>
+    <td>0x0002</td>
+    <td>Bit-mapped GPIO:
+        <br>P11:P10 -- outputs, ROM bank select (verified)
+        <br>&emsp;&emsp;&emsp;&emsp;&emsp;11=U16 (boot rom), 10=U15, 01=U14, 00=unused
+        <br>P12 -- input from tape gate array. 0=user wants power off, 1=user wants power on 
+        <br>P13 -- input, Ring Indicator
+        <br>P14 -- input, DCD (carrier detect)
+        <br>P15 -- output, on hook. 0=off hook (active). 1=on hook
+        <br>P16 -- output, originate/answer
+        <br>P17 -- output, squelch transmitter. 1=txmitter in modem is off
+        <br>0x63 is stored when powering off.
+        </td>
+  </tr>
+  <tr>
+    <td>Keyboard</td>
+    <td>CSKBD</td>
+    <td>74C374<br>74C244</td>
+    <td>0x0020 write<br>0x0020 read</td>
+    <td>8x8 matrix.  Writing selects which columns to probe.  Reading
+      <br>returns which rows have buttons pressed with selected columns.
+      <br>Setting multiple bits on write will logical-OR the return value
+      <br>so writing 0xFF is a quick way to check if any key is pressed.</td>
+  </tr>
+  <tr>
+    <td>LCD</td>
+    <td>CSDISP</td>
+    <td><a href="https://www.alldatasheet.com/datasheet-pdf/pdf/80248/HITACHI/HD61830A00H.html">Hitachi HD61830A00</a></td>
+    <td>0x0024 cmd reg<br>0x0025 data reg<br>
+    <td>LCD RAM must be accessed through this interface; it's not memory mapped.<br>
+        Uses a custom font ROM; if high bit is set, then font is reversed (highlighted).</td>
+  </tr>
+  <tr>
+    <td>Tape Gate Array</td>
+    <td>CSTAPER0</td>
+    <td>U29</td>
+    <td>0x002C read-only</td>
+    <td>Custom logic. Still deciphering.<br>
+        bit 0 seems to be tape motor enable (0=on?)<br>
+        bit 2 & 3 sense if the tape is in and/or write-protected:<br>
+        &emsp;0x04 = no tape, can't record<br>
+        &emsp;0x08 = tape, can record<br>
+        &emsp;0x00 = tape, can't record<br>
+        &emsp;0x0C = tape, can't record<br>
+    </td>
+  </tr>
+  <tr>
+    <td>Tape Gate Array</td>
+    <td>CSTAPEW0</td>
+    <td>U29</td>
+    <td>0x002C write-only</td>
+    <td>Custom logic. Still deciphering.</td>
+  </tr>
+  <tr>
+    <td>Tape Gate Array</td>
+    <td>CSTAPEW1</td>
+    <td>U29</td>
+    <td>0x002D write-only</td>
+    <td>Custom logic. Still deciphering.<br>
+        Set to 0x00 at powerup, 0x41 just before powering off.<br>
+        May have something to do with audio routing because seen setting before beeping.<br>
+        bit 6 -- set high to turn power off
+    </td>
+  </tr>
+  <tr>
+    <td>DTMF dialer</td>
+    <td>CSDTMFW-</td>
+    <td><a href="https://www.alldatasheet.com/html-pdf/101830/TI/TCM5089/24/1/TCM5089.html">TCM5089N</a></td>
+    <td>0x0030 write-only</td>
+    <td>Touch tone tone generator.</td>
+  </tr>
+  <tr>
+    <td>RTC (Real Time Clock)</td>
+    <td>CSRTC</td>
+    <td><a href="https://www.alldatasheet.com/datasheet-pdf/pdf/115061/HITACHI/HD146818FP.html">Hitachi HD146818FP</a></td>
+    <td>0x0040-0x007F</td>
+    <td>Real-time clock with extra RAM memory.<br>
+    0x40-0x4D are clock registers.<br>
+    0x4E-0x7F is general-purpose battery-backed RAM.<br>
+    Square wave generator is used to make beeps.</td>
+  </tr>
+  <tr>
+    <td>RAM</td>
+    <td>CPU Internal</td>
+    <td></td>
+    <td>0x0080-0x00FF</td>
+    <td>128 bytes of internal CPU RAM</td>
+  </tr>
+  <tr>
+    <td>RAM</td>
+    <td>CSRAM0-7</td>
+    <td>eight chips<br>HM6116LFP-2</td>
+    <td>0x0100-0x7FFF</td>
+    <td>Default is 16kB (to 0x3FFF). Stack starts at 0x21F and grows downward.</td>
+  </tr>
+  <tr>
+    <td>ROM</td>
+    <td>ROM0-2</td>
+    <td>HN613256PD15</td>
+    <td>0x8000-0xFFFF</td>
+    <td>Bank switched by P1 outputs. ROM2 is the boot bank. ROM0 not populated.</td>
+  </tr>
+  <tr>
+    <td>External Interrupt</td>
+    <td>IRQ1</td>
+    <td></td>
+    <td></td>
+    <td>IRQ1 is generated from RTC.</td>
+  </tr>
+  <tr>
+    <td>Non-Maskable Interrupt</td>
+    <td>NMI</td>
+    <td></td>
+    <td></td>
+    <td>NMI is generated by tape movement and used to count the position.</td>
+  </tr>
+</table>
+    </div>
+
+    <!-- Tab Script -->
+    <script>
+      var keyboard_active = 0;
+      function getKeyboardActive() {
+        return keyboard_active;
+      }
+
+      function openTab(evt, tabName, is_simulator) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+        
+        keyboard_active = is_simulator;
+      }
+
+      // Get the element with id="defaultOpen" and click on it
+      document.getElementById("defaultOpen").click();
+    </script>
+
+    <!-- Assets used by the WASM -->
+    <!-- <canvas style="border:1px solid #000000;" id="workslate_canvas"></canvas> -->
+    <canvas id="workslate_canvas"></canvas>
+    
+    <!-- This hidden image is loaded by the wasm code to fill the canvas with -->
+    <img src="workslate-background.jpg" style="display:none" alt="background image" id="img1">
+    
+    <script src="workslate.js"></script>
+ 
+    <br> <br> <br>
+    Copyright 2025 John Maushammer
+    <br> <!-- extra space at bottom -->
+  </body>
+</html>

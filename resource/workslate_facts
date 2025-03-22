@@ -1,0 +1,72 @@
+
+ Facts start in column 1.  If column one has a blank, then the line is
+ a comment.
+
+ Facts are in the following format:
+
+ ffc0 fcc <length> <label> <comment>		String
+ fff8 fdb <length> <label> <comment>		Word
+ fff8 fcb <length> <label> <comment>		Byte
+ fcf4 rmb <length> <label> <comment>		Space
+ e800 code <label> <comment>			Code label
+ e800 subr <label> <comment>			Beginning of subroutine label
+ 0 swi <number> <label> <comment>		MDOS operating system call
+
+
+ ** WORKSLATE **
+0000 fcb 1 PORT1_DDR     
+0001 fcb 1 PORT2_DDR     
+0002 fcb 1 PORT1         
+0003 fcb 1 PORT2         
+0004 fcb 1 PORT3_DDR     
+0005 fcb 1 PORT4_DDR     
+0006 fcb 1 PORT3         
+0007 fcb 1 PORT4         
+
+0008 fcb 1 TCR           Timer Control/Status Register (TCSR) -- TODO
+0009 fcb 1 CHR           free-running counter, high
+000A fcb 1 CLR           free-running counter, low
+000B fcb 1 OCHR          Output compare register, high
+000C fcb 1 OCLR          Output compare register, low
+000D fcb 1 ICHR         
+000E fcb 1 ICLR         
+000F fcb 1 PORT3_CSR    
+0010 fcb 1 RMCR          SCI Rate and Mode Control Register  (only lower 4 bits)
+0011 fcb 1 TRCSR         Transmit/ Receive Control and Status Register
+0012 fcb 1 SCRDR         SCI Receiver Data Register
+0013 fcb 1 SCTDR         SCI Transmit Data Register - used with "Print" command
+0014 fcb 1 RAMCTRL       ram control
+
+0020 fcb 1 KBD           read and write
+0024 fcb 1 LCD_DATA      lcd data
+0025 fcb 1 LCD_INSTR     lcd instruction
+
+002C fcb 1 CSTAPE0       seen at powerup. Used by NMI routine (which counts tape position).  Doc says has power-down bit.
+002D fcb 1 CSTAPE1       seen at powerup, and also =0x41 just before SLP instruction with no interrupts
+0030 fcb 1 DTMF          seen at D6CC
+0040 fcb 1 RTC_START     RTC
+004A fcb 1 RTC_REG_A     RTC
+004B fcb 1 RTC_REG_B     RTC
+004C fcb 1 RTC_REG_C     RTC
+004D fcb 1 RTC_REG_D     RTC
+
+ ** Workslate (assuming in bank U16) **
+86a0 code SERVICE_SCI_VECTOR	IRQ2/SCI (RDRF, ORFE, TORE)
+86a4 code SERVICE_TOF_VECTOR	IRQ2/Timer Overflow (TOF)
+86a8 code SERVICE_OCF_VECTOR	IRQ2/Timer Output Compare (OCF)
+86ac code SERVICE_ICF_VECTOR	IRQ2/Timer Input Capture (lCF)
+86b0 code SERVICE_IRQ1_VECTOR	IRQ1 vector
+86b4 code SERVICE_SWI_VECTOR	SWI vector
+c335 code SERVICE_NMI_VECTOR	NMI vector
+be31 code SERVICE_RST_VECTOR	RESET vector
+
+ ** CPU **
+fff0 fdb 1 SCI_VECTOR	IRQ vector
+fff2 fdb 1 TOF_VECTOR	IRQ vector
+fff4 fdb 1 OCF_VECTOR	IRQ vector
+fff6 fdb 1 ICF_VECTOR	IRQ vector
+fff8 fdb 1 IRQ1_VECTOR	IRQ vector
+fffa fdb 1 SWI_VECTOR	SWI vector
+fffc fdb 1 NMI_VECTOR	NMI vector
+fffe fdb 1 RST_VECTOR	RESET vector
+

@@ -447,19 +447,20 @@ void rtc_update(struct timespec *ts)  // ts isn't really used, but it could be i
 // https://shapecatcher.com
 //
 uint32_t iso_font[32] = {
-/* 00 */  '#',
+/* 00 */  0xe28690,   // ←  e2 86 90  left arrow
 /* 01 */  0xe28692,   // →  e2 86 92  right arrow (seen in sort)
 /* 02 */  0xe29c87,   // ✇  E2 9C 87  tape symbol (should be squarer)
-/* 03 */  '#',
+/* 03 */  0xE29ABF,   // ⚿  E2 9A BF  key symbol
 /* 04 */  0xc397,     // ×  C3 97     times
 /* 05 */  0xc3b7,     // ÷  C3 B7     divide
 /* 06 */  0xe289a0,   // ≠  e2 89 a0  not equals
-/* 07 */  '!',        // 🔔           bell character used for alarms (no unicode)
-/* 08 */  '#',        // maybe error symbol? seen in status bar
+/* 07 */  0xF09F9494, // 🔔 F0 9F 94 94 bell character used for alarms (no unicode)
+// 08     0xF09F939E, // 📞 F0 9F 93 9E phone hook symbol seen in status bar
+/* 08 */  0xe2988e,   // ☎  E2 98 8E  phone hook symbol seen in status bar
 /* 09 */  0xe297b7,   // ◷  e2 97 b7  clock symbol when timer is running
 /* 0a */  0xe2908a,   // ␊  e2 90 8a  displayed by password function
 /* 0b */  0xe29780,   // ◀  e2 97 80  filled arrow next to Row and Column indicators
-/* 0c */  '#',
+/* 0c */  0xe2908c,   // ␌  e2 90 8c  FF character
 /* 0d */  0xe2908d,   // ␍  e2 90 8d  displayed by password function
 /* 0e */  0xe2948f,   // ┏  e2 94 8f
 /* 0f */  0xe29493,   // ┓  e2 94 93
@@ -474,7 +475,7 @@ uint32_t iso_font[32] = {
 /* 18 */  0xe29481,   // ━  e2 94 81  thick horizontal bar
 /* 19 */  0xe29590,   // ═  e2 95 90
 /* 1a */  0xe296a3,   // ▣  e2 96 a3        ◾  e2 97 be -- not working
-/* 1b */  '#',
+/* 1b */  0xe2909b,   // ␛  e2 90 9b  EC character
 /* 1c */  0xc2a9,     // ©  c2 a9  ... this char actually doesn't exist anywhere else!
                       // special-C = CT char (displays as 0x1c) ... convergent technologies?!
                       // This is a C in the top left corner, a T in the bottom right.
@@ -1165,8 +1166,8 @@ unsigned char mread_raw(unsigned short addr)
     if((addr >= 0x80) && (addr < RAMSIZE)) {
         return ram[addr];
     } else if (addr >= ROMSTART) {
-        int port = ram[ADDR_PORT1] & 0x03;
-        switch(port) {
+        int bank = ram[ADDR_PORT1] & 0x03;
+        switch(bank) {
             case 3:  return rom_u16[addr - ROMSTART];  // starts with U16
             case 2:  return rom_u15[addr - ROMSTART];  // other rom
             case 1:  return rom_u14[addr - ROMSTART];  // unknown if really here
@@ -1191,7 +1192,7 @@ unsigned char mread_raw(unsigned short addr)
                 return read_CSTAPER0();
             case ADDR_PORT1:
                 // return (ram[addr] & 0x63) | 0x04;  // mask out read-only and force bit 2 high (keep power on).  Change if we want to power off.
-                return ram[addr];
+                return ram[addr] | 0x08; // Force ring-indicator off (TODO: make read-only bits of PORT1 seperate from write parts)
             case ADDR_TRCSR:   // Transmit/Receive Control and Status Register
                 deassert_irq(ADDR_SCI_VECTOR);  // not exactly by the book - disables too early!
                 return (ram[addr] | 0x20);  // ok to TX
